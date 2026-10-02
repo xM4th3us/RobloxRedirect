@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abrindo Roblox...</title>
+    <style>
+        body { background: #1e1f22; color: #fff; font-family: Arial, sans-serif; display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; text-align: center; padding: 20px; }
+        h1 { font-size: 22px; margin-bottom: 10px; }
+        p { color: #aaa; font-size: 14px; }
+        a { display: inline-block; margin-top: 20px; padding: 12px 24px; background: #5865f2; color: white; text-decoration: none; border-radius: 8px; font-weight: bold; }
+        a:hover { background: #4752c4; }
+    </style>
+</head>
+<body>
+    <h1>🎮 Abrindo o Roblox...</h1>
+    <p id="status">Aguarde alguns segundos...</p>
+    <a id="manualBtn" href="#" style="display:none;">Abrir manualmente</a>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const placeId = params.get("placeId");
+        const jobId = params.get("jobId");
+
+        if (!placeId || !jobId) {
+            document.getElementById("status").textContent = "❌ Link inválido.";
+        } else {
+            const deepLink = `roblox://experiences/start?placeId=${placeId}&gameInstanceId=${jobId}`;
+            document.getElementById("manualBtn").href = deepLink;
+
+            // Tenta abrir automaticamente
+            window.location.href = deepLink;
+
+            // Se depois de 3s ainda estiver na página, mostra o botão manual
+            setTimeout(() => {
+                document.getElementById("status").textContent = "Se não abriu, clique no botão abaixo:";
+                document.getElementById("manualBtn").style.display = "inline-block";
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
